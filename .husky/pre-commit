@@ -2,3 +2,6 @@ echo "Lint stage..."
 
 
 bunx lint-staged
+
+# echo "github action runner..."
+# sudo ./bin/act
