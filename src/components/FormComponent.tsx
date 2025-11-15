@@ -1,9 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,9 +11,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, SelectValue } from "./ui/select"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -27,7 +33,7 @@ const formSchema = z.object({
       message:
         "Auto-detection is not allowed. Please select a specific language.",
     }),
-})
+});
 
 const spokenLanguages = [
   { label: "English", value: "en" },
@@ -37,33 +43,35 @@ const spokenLanguages = [
   { label: "Italian", value: "it" },
   { label: "Chinese", value: "zh" },
   { label: "Japanese", value: "ja" },
-] as const
+] as const;
 
 type TFormProps = {
-    initialData?: TSchemaVal & {id:string};
-}
+  initialData?: TSchemaVal & { id: string };
+};
 type TSchemaVal = z.infer<typeof formSchema>;
-const transformData = (data:TSchemaVal & {id:string}): TSchemaVal| undefined=>{
-    if(!data) return undefined;
-    console.log("data:",data)
-    return {
-        username: data.username ?? "",
-        language: data.language ?? "",
-    }
-}
-const FormComponent = ({initialData}: TFormProps) => {
-    console.log("initialData:",initialData);
+const transformData = (
+  data: TSchemaVal & { id: string }
+): TSchemaVal | undefined => {
+  if (!data) return undefined;
+  console.log("data:", data);
+  return {
+    username: data.username ?? "",
+    language: data.language ?? "",
+  };
+};
+const FormComponent = ({ initialData }: TFormProps) => {
+  console.log("initialData:", initialData);
 
   const form = useForm<TSchemaVal>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData ? transformData(initialData): undefined,
-  })
- 
+    defaultValues: initialData ? transformData(initialData) : undefined,
+  });
+
   // 2. Define a submit handler.
   function onSubmit(values: TSchemaVal) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    console.log(values);
   }
   return (
     <Form {...form}>
@@ -92,28 +100,28 @@ const FormComponent = ({initialData}: TFormProps) => {
               <FormLabel>Language</FormLabel>
               <FormControl>
                 <Select
-                    name={field.name}
-                    // defaultValue={field.value}
-                    value={field.value}
-                    onValueChange={field.onChange}
+                  name={field.name}
+                  // defaultValue={field.value}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger
+                    id="form-rhf-select-language"
+                    aria-invalid={fieldState.invalid}
+                    className="min-w-[120px]"
                   >
-                    <SelectTrigger
-                      id="form-rhf-select-language"
-                      aria-invalid={fieldState.invalid}
-                      className="min-w-[120px]"
-                    >
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="item-aligned">
-                      <SelectItem value="auto">Auto</SelectItem>
-                      <SelectSeparator />
-                      {spokenLanguages.map((language) => (
-                        <SelectItem key={language.value} value={language.value}>
-                          {language.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent position="item-aligned">
+                    <SelectItem value="auto">Auto</SelectItem>
+                    <SelectSeparator />
+                    {spokenLanguages.map((language) => (
+                      <SelectItem key={language.value} value={language.value}>
+                        {language.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -125,8 +133,7 @@ const FormComponent = ({initialData}: TFormProps) => {
         <Button type="submit">Submit</Button>
       </form>
     </Form>
-    
-  )
-}
+  );
+};
 
-export default FormComponent
+export default FormComponent;
