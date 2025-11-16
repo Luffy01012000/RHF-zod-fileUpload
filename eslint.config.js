@@ -13,7 +13,8 @@ export default defineConfig([
       "react-refresh/only-export-components": "off",
       "react-hooks/refs" : "warn",
       "@typescript-eslint/no-explicit-any": "warn",
-      
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/use-memo": "warn"
     },
     extends: [
       js.configs.recommended,
