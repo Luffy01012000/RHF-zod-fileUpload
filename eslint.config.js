@@ -10,7 +10,10 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     rules: {
-      "react-refresh/only-export-components": "off"
+      "react-refresh/only-export-components": "off",
+      "react-hooks/refs" : "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      
     },
     extends: [
       js.configs.recommended,

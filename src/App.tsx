@@ -1,9 +1,13 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router";
-import FormComponent from "./components/FormComponent";
+import FormComponent from "@/components/FormComponent";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center mt-20">
+    <QueryClientProvider client={queryClient}>
+    <div className="flex flex-col items-center justify-center mt-20 " >
       <BrowserRouter>
         <nav className="flex items-center justify-center gap-10 mb-5">
           <Link to="/">Home</Link>
@@ -21,6 +25,12 @@ function App() {
                   id: "1",
                   language: "en",
                   username: "goku",
+                  hasWorkExperience: true,
+                  companyName: "goku PVT LTD",
+                  educationLevel: "bachelorsDegree",
+                  universityName: "Ganpat university",
+                  knowsOtherLanguages: true,
+                  languages: [{name: "hindi"},{name: "english"},{name: "gujarati"}]
                 }}
               />
             }
@@ -33,6 +43,7 @@ function App() {
       username: "gohan"
     }}/> */}
     </div>
+    </QueryClientProvider>
   );
 }
 
